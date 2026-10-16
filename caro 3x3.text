@@ -1,0 +1,61 @@
+ban_co ={ # hàm in bàn cờ ra sau mỗi lần người chơi nhập
+    '11': ' ', '12': ' ', '13': ' ',
+    '21': ' ', '22': ' ', '23': ' ',
+    '31': ' ', '32': ' ', '33': ' ',
+}
+def in_ban_co(): # hàm để in bàn cờ ra
+    print(f"\n {ban_co['11']} | {ban_co['12']} | {ban_co['13']}")
+    print("---|---|---")
+    print(f" {ban_co['21']} | {ban_co['22']} | {ban_co['23']}")
+    print("---|---|---")
+    print(f" {ban_co['31']} | {ban_co['32']} | {ban_co['33']}")
+
+def nguoi_choi_X():
+    while True: # nghĩa là lặp mãi mãi không bao giờ dừng
+        vi_tri = input("Luot cua [X], nhap vi tri vd 11, 12 ,13...: ") # vi_tri = input để người chơi nhập vào từ bàn phím
+        if vi_tri in ban_co and ban_co[vi_tri] == ' ': # nếu và vị trí vừa nhập vào và ô đó đang trống thì
+            ban_co[vi_tri] ='X' # thì ô này sẽ xuất điền X vào vị trí đó
+            break
+            print ("cho nay da duoc danh roi")
+def nguoi_choi_0():
+    while True:
+        vi_tri = input(" Luot cua [O], nhap vi tri vd 11,12 ,13...: ")
+        if vi_tri in ban_co and ban_co[vi_tri] == ' ':
+            ban_co[vi_tri] ='0'
+            break
+            print("cho nay do duoc danh roi")
+def kiem_tra_thang(p): # hàm này để tập hợp các điều kiện để thắng ở cờ 3x3 tức là điều kiện là 3 ô sát nhau liên tiếp thì sẽ win
+    if (ban_co['11'] == ban_co['12'] == ban_co['13'] == p or
+        ban_co['21'] == ban_co['22'] == ban_co['23'] == p or
+        ban_co['31'] == ban_co['32'] == ban_co['33'] == p or
+        ban_co['11'] == ban_co['21'] == ban_co['31'] == p or
+        ban_co['12'] == ban_co['22'] == ban_co['32'] == p or
+        ban_co['13'] == ban_co['23'] == ban_co['33'] == p or
+        ban_co['11'] == ban_co['22'] == ban_co['33'] == p or
+        ban_co['13'] == ban_co['22'] == ban_co['31'] == p):
+        return True;
+    else: # nhớ : để xuống dòng
+        return False
+
+def main(): # hàm chính
+    so_luot_danh = 0  # khởi tạo hàm chính là bằng 0
+    while True: # lặp mãi mãi
+        in_ban_co() # in bàn cờ ra
+        nguoi_choi_X() # cho người x đánh
+        in_ban_co() # in ra tiếp để xác định
+        nguoi_choi_0() # cho người 0 đánh
+        so_luot_danh+=1 # tăng lượt đánh lên để đến khi 9 thì ra điều kiện hòa
+        if kiem_tra_thang('X'): # nếu x tháng in ra chúc mừng
+            in_ban_co()
+            print ("nguoi choi x da thang")
+            break
+        elif kiem_tra_thang('0'):
+            in_ban_co()
+            print ("nguoi choi 0 da thang")
+            break
+        elif so_luot_danh == 9: # nếu lượt bằng 9 thì là huề
+            in_ban_co()
+            print (" 2 nguoi choi hoa")
+            break
+if __name__ == '__main__': # gọi main ra để nó chạy
+    main()
